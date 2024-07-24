@@ -17,16 +17,6 @@ from reedsolo import RSCodec
 
 from decimal import Decimal
 
-
-       
-
-
-
-
-
-
-
-
 #24 mapping rules
 def method(num):
     if(num==0):
