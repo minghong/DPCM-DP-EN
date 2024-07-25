@@ -401,12 +401,6 @@ def depth_first(path):
                 
 if __name__ == "__main__":
 
-
-    dic_A={}
-    dic_C={}
-    dic_G={}
-    dic_T={}
-    
     file_path = '/fs0/home/xuqi/encrpy_balance_GC/dataset/x-ray'  #image dataset
     depth_first(file_path)
     
