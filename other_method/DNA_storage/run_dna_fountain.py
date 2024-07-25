@@ -15,7 +15,7 @@ def gc(sequence):
 def handle_timeout(signum, frame):
     raise Exception("Timeout!")
     
-def depth_first(path):       # 深度优先遍历文件夹，栈，先进后出，先找到最深的，再弹出来，消耗内存
+def depth_first(path):      
     
     for i in os.listdir(path):
         child = os.path.join(path, i)
