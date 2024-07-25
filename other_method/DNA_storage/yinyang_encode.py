@@ -38,7 +38,7 @@ def gc(sequence):
     return (dic["G"]+dic["C"])/(dic["A"]+dic["T"]+dic["G"]+dic["C"])
 def handle_timeout(signum, frame):
     raise Exception("Timeout!")
-def depth_first(path):       # 深度优先遍历文件夹，栈，先进后出，先找到最深的，再弹出来，消耗内存
+def depth_first(path):       
     
     for i in os.listdir(path):
         child = os.path.join(path, i)
@@ -46,7 +46,6 @@ def depth_first(path):       # 深度优先遍历文件夹，栈，先进后出�
             depth_first(child)
         else:
             if(os.path.splitext(child)[1] == ".png"):
-                start=time.time()
                 root_path = os.path.dirname(Chamaeleo.__file__)
                 current_path = os.path.dirname(os.path.realpath(__file__))
                 generated_file_path = current_path
@@ -56,9 +55,7 @@ def depth_first(path):       # 深度优先遍历文件夹，栈，先进后出�
                 temp_model_path = os.path.join(generated_file_path, "model.pkl")
                 dna_path = os.path.join(generated_file_path, "target.dna")
                 
-                out_2=open("yinyang.txt","a+")
-                out_2.write(child+"\t")
-                start=time.time()
+
                 try:
                     timeout_duration = 100
          
@@ -68,53 +65,12 @@ def depth_first(path):       # 深度优先遍历文件夹，栈，先进后出�
                     
                     encode(model_path=temp_model_path, input_path=child, output_path=dna_path)
                     signal.alarm(0)
-                    out_2.write(str(time.time()-start)+"\t")
-                    file = open("target.dna")
-                    a=Counter()
-                    out_3=open("gc.txt","a")
-                    for line in file.readlines():
-                        a+=dict(Counter(line.rstrip("\n")))
-                        h=dict(Counter(line.rstrip("\n")))
-                        length=len(line.rstrip("\n"))
-                        if("A" in h):
-                            global dic_A;
-                            dic_A[h["A"]/length] = dic_A.get(h["A"]/length, 0) + 1  
-                        else:
-                            dic_A[0] = dic_A.get(0, 0) + 1 
-                        if("C" in h):
-                            global dic_C;
-                            dic_C[h["C"]/length] = dic_C.get(h["C"]/length, 0) + 1  
-                        else:
-                            dic_C[0] = dic_C.get(0, 0) + 1 
-                        if("G" in h):
-                            global dic_G;
-                            dic_G[h["G"]/length] = dic_G.get(h["G"]/length, 0) + 1  
-                        else:
-                            dic_G[0] = dic_G.get(0, 0) + 1 
-                        if("T" in h):
-                            global dic_T;                    
-                            dic_T[h["T"]/length] = dic_T.get(h["T"]/length, 0) + 1   
-                        else:
-                            dic_T[0] = dic_T.get(0, 0) + 1 
-                        out_3.write(str(gc(line.rstrip("\n")))+"\t")
-                    out_3.write("\n")
-                    out_3.close()
-                    out_2.write(str(a["A"])+"\t")
-                    out_2.write(str(a["T"])+"\t")
-                    out_2.write(str(a["G"])+"\t")
-                    out_2.write(str(a["C"])+"\t")
-                    file.close()
-                                   
-                    
-                    
-                    start=time.time()
+
                     decode(model_path=temp_model_path, input_path=dna_path, output_path=write_file_path)
-                    out_2.write(str(time.time()-start)+"\n")
-                    out_2.close()
+
                 except Exception as e:
                     print(e)
-                    out_2.write("TLE"+"\n")
-                    out_2.close()
+
 if __name__ == "__main__":
 
 
