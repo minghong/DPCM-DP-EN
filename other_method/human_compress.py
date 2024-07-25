@@ -151,21 +151,13 @@ def depth_first(path):
             depth_first(child)
         else:
             if(os.path.splitext(child)[1] == ".png"):
-                start=time.time()
+
                 picture,w,height = picture_convert(child)
                 h,table=Huffman_Coding(picture)
-                out_2=open("result_2.txt","a+")
 
-                out_2.write(child+"\t"+str(height)+"\t"+str(w)+"\t"+str(len(h))+"\t")
-                out_2.write(str(time.time()-start)+"\t")
-                start=time.time()
                 Decoding(w,height,table,h)
-                out_2.write(str(time.time()-start)+"\n")
-                out_2.close()
 
-out_2=open("result_2.txt","a+")
 
-out_2.write("file-name\theight\twight\thuman-size\thuman-compress-time\tdecompress-time\n")
-out_2.close()
+
 file_path = '/fs0/home/xuqi/encrpy_balance_GC/dataset/x-ray'
 depth_first(file_path)
