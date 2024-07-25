@@ -36,7 +36,6 @@ def picture_convert(filename):
     picture = picture.convert('L')
     return picture,w,h
  
-#定义函数，统计每个像素出现的次数
 def pixel_number_caculate(list):
     pixel_number={}
     for i in list:
@@ -64,7 +63,6 @@ def node_construct(pixel_number):
 def tree_construct(listnode):
     listnode = sorted(listnode,key=lambda node:node.weight) 
     while len(listnode) != 1:
-        #每次取权值的两个像素点进行合并
         low_node0,low_node1 = listnode[0], listnode[1]
         new_change_node = node()
         new_change_node.weight = low_node0.weight + low_node1.weight
@@ -120,14 +118,12 @@ def Huffman_Coding(picture):
     return coding_result,coding_table
 
 def Decoding(width,height,coding_table,coding_result): 
-    code_read_now=''#当前读到的编码 
+    code_read_now=''
     new_pixel =[] 
     i = 0
     while (i != coding_result.__len__()):
-        #每次往后读一位
         code_read_now = code_read_now + coding_result[i]
         for key in coding_table.keys():
-            #如果当前读到的编码在编码表里存在 
             if str(code_read_now) == str(coding_table[key]): 
                 new_pixel. append(key) 
                 code_read_now =''
@@ -136,7 +132,6 @@ def Decoding(width,height,coding_table,coding_result):
 
     decode_image = Image.new( 'L' ,(width,height)) 
     k = 0 
-    #篇予像聚值
     for i in range(width):
         for j in range(height):
             decode_image.putpixel((i,j),(int(new_pixel[k]))) 
